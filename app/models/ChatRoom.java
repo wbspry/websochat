@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 
 
 
+
+
 import java.util.*;
 
 import static java.util.concurrent.TimeUnit.*;
@@ -40,9 +42,12 @@ public class ChatRoom extends UntypedActor {
         
         // Send the Join message to the room
     	String result = null;
+    	System.out.println("toASK");
         result = (String)Await.result(ask(defaultRoom,new Join(username, out), 1000), Duration.create(1, SECONDS));
+    	System.out.println("endASK");
         
         if("OK".equals(result)) {
+        	System.out.println("askOK");
             
             // For each event received on the socket,
             in.onMessage(new Callback<JsonNode>() {
@@ -65,6 +70,7 @@ public class ChatRoom extends UntypedActor {
             });
             
         } else {
+        	System.out.println("askNG");
             
             // Cannot connect, create a Json error.
             ObjectNode error = Json.newObject();
