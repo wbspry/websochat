@@ -12,6 +12,9 @@ $(function() {
     }
 
     var receiveEvent = function(event) {
+    	
+    	alert("receive");
+    	
         var data = JSON.parse(event.data)
 
         // Handle errors
