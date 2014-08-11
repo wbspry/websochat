@@ -31,9 +31,9 @@ public class ChatRoom extends UntypedActor {
     static ActorRef defaultRoom = Akka.system().actorOf(Props.create(ChatRoom.class));
     
     // Create a Robot, just for fun.
-    static {
-        new Robot(defaultRoom);
-    }
+//    static {
+//        new Robot(defaultRoom);
+//    }
     
     /**
      * Join the default room.
@@ -98,7 +98,7 @@ public class ChatRoom extends UntypedActor {
             } else {
                 members.put(join.username, join.channel);
 
-                System.out.println("メンバーは" + members.size() + "人");
+                System.out.println("===MEMBER===" + members.size() + "===");
                 
 
                 notifyAll("join", join.username, "has entered the room");
@@ -141,7 +141,7 @@ public class ChatRoom extends UntypedActor {
                 m.add(u);
             }
             
-           	System.out.println(channel.toString() + "に書き込むよ");
+           	System.out.println("===WRITING===" + channel.toString());
            	
             channel.write(event);
         }
