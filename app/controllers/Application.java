@@ -3,8 +3,8 @@ package controllers;
 import play.mvc.*;
 
 import com.fasterxml.jackson.databind.JsonNode; 
-import views.html.*;
 
+import views.html.*;
 import models.*;
 
 public class Application extends Controller {
@@ -43,6 +43,8 @@ public class Application extends Controller {
         return new WebSocket<JsonNode>() {
             // Called when the Websocket Handshake is done.
             public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){
+
+            	System.out.println("===SOCKET READY===");
                 
                 // Join the chat room.
                 try { 

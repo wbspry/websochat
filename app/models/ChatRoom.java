@@ -142,8 +142,8 @@ public class ChatRoom extends UntypedActor {
             }
             
            	System.out.println("===WRITING===" + channel.toString());
-           	
             channel.write(event);
+           	System.out.println("===WROTE===");
         }
     }
     

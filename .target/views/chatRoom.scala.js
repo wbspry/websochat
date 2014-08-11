@@ -51,7 +51,8 @@ $(function() {
     $("#talk").keypress(handleReturnKey)
 
     chatSocket.onmessage = receiveEvent
-    
-    alert("test");
+
+    chatSocket.onclose(alert("close!"));
+
 
 })
