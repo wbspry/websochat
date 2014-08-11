@@ -9,4 +9,4 @@ resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/release
 
 //addSbtPlugin("com.typesafe.play" % "sbt-plugin" % System.getProperty("play.version"))
 
-org.scala-sbt#boot-scala
+addSbtPlugin("play" % "sbt-plugin" % "2.2.3")
