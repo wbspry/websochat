@@ -1,8 +1,11 @@
 package controllers;
 
+import play.libs.Json;
 import play.mvc.*;
 
 import com.fasterxml.jackson.databind.JsonNode; 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import views.html.*;
 import models.*;
@@ -47,8 +50,16 @@ public class Application extends Controller {
             	System.out.println("===SOCKET READY===");
                 
                 // Join the chat room.
-                try { 
-                    ChatRoom.join(username, in, out);
+                try {
+                	
+//                    ChatRoom.join(username, in, out);
+                    
+                    ObjectNode event = Json.newObject();
+                    event.put("kind", "shortcut");
+                    
+                    out.write(event);
+                    
+                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
