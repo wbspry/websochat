@@ -38,21 +38,18 @@ public class ChatRoom extends UntypedActor {
     /**
      * Join the default room.
      */
-    public static synchronized void join(final String username, WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) throws Exception{
+    public static void join(final String username, WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out) throws Exception{
         
         // Send the Join message to the room
     	String result = null;
-    	System.out.println("toASK");
         result = (String)Await.result(ask(defaultRoom,new Join(username, out), 1000), Duration.create(1, SECONDS));
-    	System.out.println("endASK");
         
         if("OK".equals(result)) {
-        	System.out.println("askOK");
             
             // For each event received on the socket,
             in.onMessage(new Callback<JsonNode>() {
                public void invoke(JsonNode event) {
-                   
+            	   
                    // Send a Talk message to the room.
                    defaultRoom.tell(new Talk(username, event.get("text").asText()), null);
                    
@@ -70,7 +67,6 @@ public class ChatRoom extends UntypedActor {
             });
             
         } else {
-        	System.out.println("askNG");
             
             // Cannot connect, create a Json error.
             ObjectNode error = Json.newObject();
@@ -101,6 +97,10 @@ public class ChatRoom extends UntypedActor {
                 getSender().tell("This username is already used", getSelf());
             } else {
                 members.put(join.username, join.channel);
+
+                System.out.println("メンバーは" + members.size() + "人");
+                
+
                 notifyAll("join", join.username, "has entered the room");
                 getSender().tell("OK", getSelf());
             }
@@ -141,6 +141,8 @@ public class ChatRoom extends UntypedActor {
                 m.add(u);
             }
             
+           	System.out.println(channel.toString() + "に書き込むよ");
+           	
             channel.write(event);
         }
     }
