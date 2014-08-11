@@ -1,9 +1,9 @@
 package models;
 
+import play.Logger;
 import play.mvc.*;
 import play.libs.*;
 import play.libs.F.*;
-
 import scala.concurrent.Await;
 import scala.concurrent.duration.Duration;
 import akka.actor.*;
@@ -12,6 +12,7 @@ import static akka.pattern.Patterns.ask;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 
 
 
@@ -82,10 +83,13 @@ public class ChatRoom extends UntypedActor {
     public void onReceive(Object message) throws Exception {
         
         if(message instanceof Join) {
-            
+        	
             // Received a Join message
             Join join = (Join)message;
+
+            Logger.info(join.username + "joined.");
             
+
             // Check if this username is free.
             if(members.containsKey(join.username)) {
                 getSender().tell("This username is already used", getSelf());
