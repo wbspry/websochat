@@ -6,4 +6,7 @@ logLevel := Level.Debug
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 // Use the Play sbt plugin for Play projects
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % System.getProperty("play.version"))
+
+//addSbtPlugin("com.typesafe.play" % "sbt-plugin" % System.getProperty("play.version"))
+
+org.scala-sbt#boot-scala
