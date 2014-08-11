@@ -52,7 +52,13 @@ $(function() {
 
     chatSocket.onmessage = receiveEvent
 
-    chatSocket.onclose(alert("close!"));
+    var closeEvent = function(){
+    	alert("clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooose");
+    }
+    
+
+    chatSocket.onclose = closeEvent
+    
 
 
 })
