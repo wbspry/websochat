@@ -19,7 +19,8 @@ public class Robot {
         WebSocket.Out<JsonNode> robotChannel = new WebSocket.Out<JsonNode>() {
             
             public void write(JsonNode frame) {
-                Logger.of("robot").info(Json.stringify(frame));
+//                Logger.of("robot").info(Json.stringify(frame));
+            	System.out.println("robotNOW");
             }
             
             public void close() {}
