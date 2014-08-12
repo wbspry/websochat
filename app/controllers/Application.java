@@ -45,6 +45,7 @@ public class Application extends Controller {
     	
         return new WebSocket<JsonNode>() {
             // Called when the Websocket Handshake is done.
+        	@Override
             public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){
 
             	System.out.println("===SOCKET READY===");

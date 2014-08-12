@@ -17,6 +17,10 @@ $(function() {
     	
         var data = JSON.parse(event.data)
 
+       	if(data.kind){
+       		alert(data.kind);
+       	}
+
         // Handle errors
         if(data.error) {
             chatSocket.close()
