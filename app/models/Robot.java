@@ -31,10 +31,10 @@ public class Robot {
         
         // Make the robot talk every 30 seconds
         Akka.system().scheduler().schedule(
-            Duration.create(30, SECONDS),
-            Duration.create(30, SECONDS),
+            Duration.create(50, SECONDS),
+            Duration.create(50, SECONDS),
             chatRoom,
-            new ChatRoom.Talk("Robot", "I'm still alive"),
+            new ChatRoom.Talk("Robot", "まだだ、まだおわらんよ"),
             Akka.system().dispatcher(),
             /** sender **/ null
         );
