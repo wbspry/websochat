@@ -33,9 +33,9 @@ public class ChatRoom extends UntypedActor {
     static ActorRef defaultRoom = Akka.system().actorOf(Props.create(ChatRoom.class));
     
     // Create a Robot, just for fun.
-//    static {
-//        new Robot(defaultRoom);
-//    }
+    static {
+        new Robot(defaultRoom);
+    }
     
     /**
      * Join the default room.

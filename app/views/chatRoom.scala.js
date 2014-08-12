@@ -14,7 +14,7 @@ $(function() {
     var receiveEvent = function(event) {
     	
         var data = JSON.parse(event.data)
-
+        
         // Handle errors
         if(data.error) {
             chatSocket.close()
@@ -24,6 +24,8 @@ $(function() {
         } else {
             $("#onChat").show()
         }
+
+        if(data.user == 'Robot') return false;
 
         // Create the message element
         var el = $('<div class="message"><span></span><p></p></div>')

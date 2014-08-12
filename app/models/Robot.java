@@ -27,7 +27,7 @@ public class Robot {
         };
         
         // Join the room
-        chatRoom.tell(new ChatRoom.Join("Robot", robotChannel), null);
+//        chatRoom.tell(new ChatRoom.Join("Robot", robotChannel), null);
         
         // Make the robot talk every 30 seconds
         Akka.system().scheduler().schedule(
