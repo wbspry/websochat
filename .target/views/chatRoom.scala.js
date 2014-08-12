@@ -13,13 +13,7 @@ $(function() {
 
     var receiveEvent = function(event) {
     	
-    	alert("receive");
-    	
         var data = JSON.parse(event.data)
-
-       	if(data.kind){
-       		alert(data.kind);
-       	}
 
         // Handle errors
         if(data.error) {
@@ -60,10 +54,9 @@ $(function() {
     chatSocket.onmessage = receiveEvent
 
     var closeEvent = function(){
-    	alert("clooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooose");
+    	alert("WebSocketが閉じられました。");
     }
     
-
     chatSocket.onclose = closeEvent
     
     $("#onChat").show()

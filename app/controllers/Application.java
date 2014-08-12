@@ -47,20 +47,9 @@ public class Application extends Controller {
             // Called when the Websocket Handshake is done.
         	@Override
             public void onReady(WebSocket.In<JsonNode> in, WebSocket.Out<JsonNode> out){
-
-            	System.out.println("===SOCKET READY===");
-                
                 // Join the chat room.
                 try {
-                	
                     ChatRoom.join(username, in, out);
-                    
-//                    ObjectNode event = Json.newObject();
-//                    event.put("kind", "shortcut");
-//                    
-//                    out.write(event);
-                    
-                    
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

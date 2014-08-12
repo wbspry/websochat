@@ -92,18 +92,11 @@ public class ChatRoom extends UntypedActor {
             // Received a Join message
             Join join = (Join)message;
 
-            Logger.info(join.username + "joined.");
-            
-
             // Check if this username is free.
             if(members.containsKey(join.username)) {
                 getSender().tell("This username is already used", getSelf());
             } else {
                 members.put(join.username, join.channel);
-
-                System.out.println("===MEMBER===" + members.size() + "===");
-                
-
 //                notifyAll("join", join.username, "has entered the room");
                 getSender().tell("OK", getSelf());
             }
@@ -144,9 +137,7 @@ public class ChatRoom extends UntypedActor {
                 m.add(u);
             }
             
-           	System.out.println("===WRITING===" + event.toString());
             channel.write(event);
-           	System.out.println("===WROTE===");
         }
     }
     
