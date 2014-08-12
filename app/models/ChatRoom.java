@@ -7,11 +7,13 @@ import play.libs.F.*;
 import scala.concurrent.Await;
 import scala.concurrent.duration.Duration;
 import akka.actor.*;
+import akka.pattern.Patterns;
 import static akka.pattern.Patterns.ask;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 
 
 
@@ -42,7 +44,7 @@ public class ChatRoom extends UntypedActor {
         
         // Send the Join message to the room
     	String result = null;
-        result = (String)Await.result(ask(defaultRoom,new Join(username, out), 1000), Duration.create(1, SECONDS));
+        result = (String)Await.result(Patterns.ask(defaultRoom,new Join(username, out), 1000), Duration.create(1, "seconds"));
         
         if("OK".equals(result)) {
             
@@ -82,6 +84,7 @@ public class ChatRoom extends UntypedActor {
     // Members of this room.
     Map<String, WebSocket.Out<JsonNode>> members = new HashMap<String, WebSocket.Out<JsonNode>>();
     
+    @Override
     public void onReceive(Object message) throws Exception {
         
         if(message instanceof Join) {
@@ -101,7 +104,7 @@ public class ChatRoom extends UntypedActor {
                 System.out.println("===MEMBER===" + members.size() + "===");
                 
 
-                notifyAll("join", join.username, "has entered the room");
+//                notifyAll("join", join.username, "has entered the room");
                 getSender().tell("OK", getSelf());
             }
             

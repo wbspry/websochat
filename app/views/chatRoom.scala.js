@@ -66,6 +66,7 @@ $(function() {
 
     chatSocket.onclose = closeEvent
     
+    $("#onChat").show()
 
 
 })

@@ -53,12 +53,12 @@ public class Application extends Controller {
                 // Join the chat room.
                 try {
                 	
-//                    ChatRoom.join(username, in, out);
+                    ChatRoom.join(username, in, out);
                     
-                    ObjectNode event = Json.newObject();
-                    event.put("kind", "shortcut");
-                    
-                    out.write(event);
+//                    ObjectNode event = Json.newObject();
+//                    event.put("kind", "shortcut");
+//                    
+//                    out.write(event);
                     
                     
                 } catch (Exception ex) {
