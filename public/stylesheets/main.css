@@ -49,6 +49,10 @@ body {
     border: 0;
 }
 
+.topbar .btn#btnNotification {
+    margin: 5px 0 0;
+}
+
 .topbar p {
     color: #888;
 }

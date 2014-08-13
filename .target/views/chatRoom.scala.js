@@ -89,31 +89,34 @@ $(function() {
     	}
     };
     
-    function notifyReq(){
-    	  Notification.requestPermission(function(permission){
-    	    console.debug("Notification permission: "+permission);
-    	    if(Notification.permission == "granted"){
-    	      notify();
-    	    }
-    	  });
-    	};
-    	function notify(user, message){
-    	  switch(Notification.permission){
-    	    case "granted":
-    	      new Notification(user, {
-    	        icon:"http://3.bp.blogspot.com/-Y042BzoevnM/UCkNli79vMI/AAAAAAAAYLs/VyStPcI4EIg/s220/logroid_150.png",
-    	        body:message,
-    	        tag:"notification-test",
-    	      });
-    	      break;
-    	    case "default":
-    	      notifyReq();
-    	      break;
-    	    case "denied":
-    	      console.warn("デスクトップ通知が拒否されています");
-    	      break;
-    	  }
-    	};
+	function notifyReq(){
+		Notification.requestPermission(function(permission){
+			console.debug("Notification permission: "+permission);
+			if(Notification.permission == "granted"){
+				notify();
+			}
+		});
+	};
 
+	function notify(user, message){
+		switch(Notification.permission){
+			case "granted":
+				new Notification(
+					user,
+					{
+						icon:"http://3.bp.blogspot.com/-Y042BzoevnM/UCkNli79vMI/AAAAAAAAYLs/VyStPcI4EIg/s220/logroid_150.png",
+						body:message,
+						tag:"notification-test",
+					}
+				);
+				break;
+			case "default":
+				notifyReq();
+				break;
+			case "denied":
+				console.warn("デスクトップ通知が拒否されています");
+				break;
+		}
+	};
 })
 

@@ -21,6 +21,7 @@
             <div class="fill">
                 <div class="container">
                     <a class="brand" href="@routes.Application.index2()">Websocket Chat-Room</a>
+                    <button class="btn" id="btnNotification">Desktop通知を許可</button>
                     
                     @if(connected != null) {
                         <p class="pull-right">
@@ -54,6 +55,9 @@
         
     	<script type="text/javascript">
     		var WEB_SOCKET_SWF_LOCATION = "@routes.Assets.at("javascripts/WebSocketMain.swf")";
+    		$("#aNotification").on("click", function(){
+    			Notification.requestPermission();
+    		});
     	</script>
         
     </body>
