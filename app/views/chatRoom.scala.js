@@ -36,7 +36,19 @@ $(function() {
         if(data.user == '@username') $(el).addClass('me')
         $('#messages').append(el)
 
-        notify(data.user,data.message);
+        try{
+			if (active_flag) {
+				// アクティブのときの処理
+				} else {
+				// 非アクティブのときの処理
+			        notify(data.user,data.message);
+				}
+        }catch(e){
+        	alert(e);
+        }
+
+        
+        
         
         // Update the members list
         $("#members").html('')
