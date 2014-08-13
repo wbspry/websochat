@@ -5,8 +5,11 @@ $(function() {
     var chatSocket = new WS("@routes.Application.chat(username).webSocketURL(request)")
 
     var sendMessage = function() {
+    	var talktext = $("#talk").val()
+    	talktext = talktext.replace(/\r\n/g, "<br />");
+    	talktext = talktext.replace(/(\n|\r)/g, "<br />");
         chatSocket.send(JSON.stringify(
-            {type:"talk", text: $("#talk").val()}
+            {type:"talk", text: talktext}
         ))
         $("#talk").val('')
     }
@@ -31,11 +34,21 @@ $(function() {
         var el = $('<div class="message"><span class="name"></span><p></p><span class="time"></span></div>')
         $("span.name", el).text(data.user)
         $("span.time", el).text(data.time)
-        $("p", el).text(data.message)
+//        var textmessage = data.message.replace(/\n/g, "<br />");
+        var textmessage = data.message;
+        $("p", el).html(textmessage)
         $(el).addClass(data.kind)
-        if(data.user == '@username') $(el).addClass('me')
-        $('#messages').append(el)
+        if(data.user == '@username'){
+        	$(el).addClass('me');
+        	$('#messages').append(el);
+        	$("#messages").scrollTop($("#messages")[0].scrollHeight);
+//        	$("#messages > div:last").focus();
+        } else {
+        	$('#messages').append(el)
+        }
 
+/*        $("#messages > div.takl.me:last").focus();*/
+        
         try{
 			if (active_flag) {
 				// アクティブのときの処理
