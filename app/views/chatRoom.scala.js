@@ -101,7 +101,7 @@ $(function() {
 	function notify(user, message){
 		switch(Notification.permission){
 			case "granted":
-				new Notification(
+				notification = new Notification(
 					user,
 					{
 						icon:"http://3.bp.blogspot.com/-Y042BzoevnM/UCkNli79vMI/AAAAAAAAYLs/VyStPcI4EIg/s220/logroid_150.png",
@@ -109,6 +109,9 @@ $(function() {
 						tag:"notification-test",
 					}
 				);
+				
+				notification.onclick = notification.close;
+				
 				break;
 			case "default":
 				notifyReq();
