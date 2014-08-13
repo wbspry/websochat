@@ -1,12 +1,8 @@
 package controllers;
 
-import play.libs.Json;
 import play.mvc.*;
 
 import com.fasterxml.jackson.databind.JsonNode; 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import views.html.*;
 import models.*;
 
@@ -31,6 +27,7 @@ public class Application extends Controller {
             flash("error", "Please choose a valid username.");
             return redirect(routes.Application.index2());
         }
+        
         return ok(chatRoom.render(username));
     }
 

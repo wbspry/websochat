@@ -33,13 +33,13 @@ body {
 }
 
 /* Styles you shouldn't keep as they are for displaying this base example only */
-.content .span10,
-.content .span4 {
+.content .span11,
+.content .span3 {
     min-height: 500px;
 }
 
 /* Give a quick and non-cross-browser friendly divider */
-.content .span4 {
+.content .span3 {
     padding-left: 9px;
     margin-left: 10px;
     border-left: 1px solid #eee;
@@ -103,7 +103,7 @@ body {
 .message p {
     display: inline-block;
     margin: 0;
-    width: 480px;
+    width: 470px;
 }
 
 .message.me {

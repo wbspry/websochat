@@ -1,6 +1,5 @@
 package models;
 
-import play.Logger;
 import play.mvc.*;
 import play.libs.*;
 import play.libs.F.*;
@@ -8,21 +7,13 @@ import scala.concurrent.Await;
 import scala.concurrent.duration.Duration;
 import akka.actor.*;
 import akka.pattern.Patterns;
-import static akka.pattern.Patterns.ask;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-
-
-
-
-
-
+import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static java.util.concurrent.TimeUnit.*;
 
 /**
  * A chat room is an Actor.
@@ -53,8 +44,7 @@ public class ChatRoom extends UntypedActor {
                public void invoke(JsonNode event) {
             	   
                    // Send a Talk message to the room.
-                   defaultRoom.tell(new Talk(username, event.get("text").asText()), null);
-                   
+                   defaultRoom.tell(new Talk(event.get("type").asText(), username, event.get("text").asText()), null);
                } 
             });
             
@@ -106,7 +96,12 @@ public class ChatRoom extends UntypedActor {
             // Received a Talk message
             Talk talk = (Talk)message;
             
-            notifyAll("talk", talk.username, talk.text);
+			Calendar clndr = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			sdf.setTimeZone(clndr.getTimeZone());
+			String daytime = sdf.format(clndr.getTime());
+			
+            notifyAll(talk.type, talk.username, talk.text, daytime);
             
         } else if(message instanceof Quit)  {
             
@@ -115,7 +110,12 @@ public class ChatRoom extends UntypedActor {
             
             members.remove(quit.username);
             
-            notifyAll("quit", quit.username, "has left the room");
+			Calendar clndr = Calendar.getInstance(TimeZone.getTimeZone("Asia/Tokyo"));
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			sdf.setTimeZone(clndr.getTimeZone());
+			String daytime = sdf.format(clndr.getTime());
+
+			notifyAll("quit", quit.username, "has left the room",daytime);
         
         } else {
             unhandled(message);
@@ -124,13 +124,14 @@ public class ChatRoom extends UntypedActor {
     }
     
     // Send a Json event to all members
-    public void notifyAll(String kind, String user, String text) {
+    public void notifyAll(String kind, String user, String text, String time) {
         for(WebSocket.Out<JsonNode> channel: members.values()) {
             
             ObjectNode event = Json.newObject();
             event.put("kind", kind);
             event.put("user", user);
             event.put("message", text);
+            event.put("time", time);
             
             ArrayNode m = event.putArray("members");
             for(String u: members.keySet()) {
@@ -157,10 +158,12 @@ public class ChatRoom extends UntypedActor {
     
     public static class Talk {
         
+        final String type;
         final String username;
         final String text;
         
-        public Talk(String username, String text) {
+        public Talk(String type, String username, String text) {
+            this.type = type;
             this.username = username;
             this.text = text;
         }
