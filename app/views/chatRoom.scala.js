@@ -33,8 +33,10 @@ $(function() {
         $("span.name", el).text(data.user)
         $("span.time", el).text(data.time)
         var textmessage = escapeHTML(data.message);
+        
+        
+        textmessage = textmessage.replace(/((https?|ftp):\/\/[^\s　]+)/gi, "<a href='$1' target='_blank'>$1</a>");
         textmessage = textmessage.replace(/\n/g, "<br />");
-        textmessage = textmessage.replace(/(https?:\/\/[\x21-\x7e]+)/gi, "<a href='$1' target='_blank'>$1</a>");
         $("p", el).html(textmessage)
         $(el).addClass(data.kind)
         if(data.user == '@username'){
@@ -158,5 +160,10 @@ $(function() {
 	var escapeHTML = function(val) {
 		return $('<div />').text(val).html();
 	};
+
+    $(window).on('beforeunload', function() {
+        return "閉じたらチャット消えてまうで。\nええんか？";
+    });
+
 })
 
