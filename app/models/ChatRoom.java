@@ -87,7 +87,7 @@ public class ChatRoom extends UntypedActor {
                 getSender().tell("This username is already used", getSelf());
             } else {
 //                notifyAll("join", join.username, "has entered the room");
-                members.put(join.username, join.channel);
+            	members.put(join.username, join.channel);
                 getSender().tell("OK", getSelf());
             }
             

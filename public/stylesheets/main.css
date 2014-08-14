@@ -83,7 +83,10 @@ body {
     left: 0;
     right: 0;
     width: auto;
-    height: 40px
+    height: 40px;
+	font-family:'‚l‚r ‚oƒSƒVƒbƒN','‚l‚r‚oƒSƒVƒbƒN','MSPƒSƒVƒbƒN','MS PƒSƒVƒbƒN';
+	font-size:16px;
+	line-height:18px;
 }
 
 .message {
@@ -108,11 +111,28 @@ body {
     display: inline-block;
     margin: 0;
     width: 470px;
+	font-family:'‚l‚r ‚oƒSƒVƒbƒN','‚l‚r‚oƒSƒVƒbƒN','MSPƒSƒVƒbƒN','MS PƒSƒVƒbƒN';
+	font-size:16px;
+	line-height:18px;
 }
 
 .message.me {
     background: #FFC;
 }
+
+/* .message.no1 {background: #ffefff;}
+.message.no2 {background: #f7efff;}
+.message.no3 {background: #eff7ff;}
+.message.no4 {background: #efffef;}
+.message.no5 {background: #ffefef;}
+.message.no6 {background: #effff7;}
+.message.no7 {background: #ffffef;}
+.message.no8 {background: #efffff;}
+.message.no9 {background: #f7ffef;}
+.message.no10 {background: #efefff;}
+.message.no11 {background: #fff7ef;}
+.message.no12 {background: #ffeff7;} */
+
 
 .message.join, .message.quit {
     background: #D9E7FB;

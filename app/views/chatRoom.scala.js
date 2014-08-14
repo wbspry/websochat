@@ -11,8 +11,6 @@ $(function() {
         ))
         $("#talk").val('')
     }
-    
-    
 
     var receiveEvent = function(event) {
     	
@@ -36,21 +34,32 @@ $(function() {
         $("span.time", el).text(data.time)
         var textmessage = escapeHTML(data.message);
         textmessage = textmessage.replace(/\n/g, "<br />");
+        textmessage = textmessage.replace(/(https?:\/\/[\x21-\x7e]+)/gi, "<a href='$1' target='_blank'>$1</a>");
         $("p", el).html(textmessage)
         $(el).addClass(data.kind)
         if(data.user == '@username'){
         	$(el).addClass('me');
         }
-    	$('#messages').append(el);
+        
+//        var i = 1;
+//        $("#members li").each(function(){
+//        	if(data.user === $(this).text()){
+//        		return false;
+//        	}
+//        	i++;
+//        });
+//        $(el).addClass('no' + i);
+
+        $('#messages').append(el);
 
     	$("#messages").scrollTop($("#messages")[0].scrollHeight);
 
-        try{
+    	try{
 			if (active_flag) {
 				// アクティブのときの処理
 				} else {
 				// 非アクティブのときの処理
-			        notify(data.user,data.message);
+					notify(data.user,data.message);
 				}
         }catch(e){
         	alert(e);
@@ -77,6 +86,21 @@ $(function() {
             sendMessage()
         }
     }
+    
+	var handleReturnKey = function(e) {
+		if(e.charCode == 13 || e.keyCode == 13) {
+			
+			if($("#talk").val()==""){
+				return false;
+			}
+			
+			if (!e.shiftKey){
+				e.preventDefault()
+				sendMessage()
+			}
+		}
+	}
+
 
     $("#talk").keypress(handleReturnKey)
 
