@@ -42,15 +42,6 @@ $(function() {
         if(data.user == '@username'){
         	$(el).addClass('me');
         }
-        
-//        var i = 1;
-//        $("#members li").each(function(){
-//        	if(data.user === $(this).text()){
-//        		return false;
-//        	}
-//        	i++;
-//        });
-//        $(el).addClass('no' + i);
 
         $('#messages').append(el);
 
@@ -61,15 +52,15 @@ $(function() {
 				// アクティブのときの処理
 				} else {
 				// 非アクティブのときの処理
-					notify(data.user,data.message);
+					//NotifyOKだったら通知
+					if(notiflag == true){
+						notify(data.user,data.message);
+					}
 				}
         }catch(e){
         	alert(e);
         }
 
-        
-        
-        
         // Update the members list
         $("#members").html('')
         $(data.members).each(function() {
@@ -134,27 +125,17 @@ $(function() {
 	};
 
 	function notify(user, message){
-		switch(Notification.permission){
-			case "granted":
-				notification = new Notification(
-					user,
-					{
-						icon:"http://3.bp.blogspot.com/-Y042BzoevnM/UCkNli79vMI/AAAAAAAAYLs/VyStPcI4EIg/s220/logroid_150.png",
-						body:message,
-						tag:"notification-test",
-					}
-				);
-				
-				notification.onclick = notification.close;
-				
-				break;
-			case "default":
-				notifyReq();
-				break;
-			case "denied":
-				console.warn("デスクトップ通知が拒否されています");
-				break;
-		}
+
+		notification = new Notification(
+				user,
+				{
+					icon:"http://3.bp.blogspot.com/-Y042BzoevnM/UCkNli79vMI/AAAAAAAAYLs/VyStPcI4EIg/s220/logroid_150.png",
+					body:message,
+					tag:"notification-test",
+				}
+			);
+			
+			notification.onclick = notification.close;
 	};
 	
 	var escapeHTML = function(val) {
@@ -166,4 +147,20 @@ $(function() {
     });
 
 })
+
+//50分おきにherokuを起こす処理
+setTimeout('mes()',10000);
+var xhr= new XMLHttpRequest();
+xhr.onload=function(ev){
+	setTimeout('mes()',3000000);/*60*50*1000(50分)*/
+};
+
+function mes(){
+	xhr.open("GET","@routes.Application.index2()");
+	xhr.send();
+}
+
+
+
+
 

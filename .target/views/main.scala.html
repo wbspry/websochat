@@ -13,7 +13,67 @@
         <script src='@routes.Assets.at("javascripts/web_socket.js")' type="text/javascript"></script>
         <script src='@routes.Assets.at("javascripts/script.js")' type="text/javascript"></script>
         <script type="text/javascript">
-	        var active_flag = true;
+			var active_flag = true;
+			var notiflag = false;
+			
+			function switchNotifyDispByFlag(){
+				
+				if(notiflag == true){
+					$("#btnNotification").addClass("success");
+					$("#btnNotification").removeClass("danger");
+					$("#notifspan").html("ON")
+				}else{
+					$("#btnNotification").addClass("danger");
+					$("#btnNotification").removeClass("success");
+					$("#notifspan").html("OFF")
+				}
+				
+			}
+			
+			
+			function switchNotiflagByPermission(){
+				switch(Notification.permission){
+				case "granted":
+					notiflag = true;
+					break;
+				case "default":
+				case "denied":
+					notiflag = false;
+					break;
+				}
+			}
+			
+			function reqPermCallback(){
+				switchNotiflagByPermission();
+				switchNotifyDispByFlag();
+			}
+			
+			$(function(){
+				switchNotiflagByPermission();
+				switchNotifyDispByFlag();
+				
+	    		$("#btnNotification").on("click", function(){
+					switch(Notification.permission){
+					case "granted":
+						if(notiflag == true){
+							notiflag = false;
+						}else{
+							notiflag = true;
+						}
+						switchNotifyDispByFlag();
+						break;
+						
+					case "default":
+						//まだ許可されてないので許可を貰いに行く
+		    			Notification.requestPermission(reqPermCallback());
+						break;
+						
+					case "denied":
+						alert("ブラウザの設定で通知の拒否を解除してください");
+						break;
+					}
+	    		});
+			});
 		</script>
     </head>
     <body onblur="active_flag=false;" onfocus="active_flag=true;">
@@ -22,7 +82,7 @@
             <div class="fill">
                 <div class="container">
                     <a class="brand" href="@routes.Application.index2()">Websocket Chat-Room</a>
-                    <button class="btn" id="btnNotification">Desktop通知を許可</button>
+                    <button class="btn" id="btnNotification">Desktop通知切り替え【<span id="notifspan">OFF</span>なう】</button>
                     
                     @if(connected != null) {
                         <p class="pull-right">
@@ -56,9 +116,6 @@
         
     	<script type="text/javascript">
     		var WEB_SOCKET_SWF_LOCATION = "@routes.Assets.at("javascripts/WebSocketMain.swf")";
-    		$("#btnNotification").on("click", function(){
-    			Notification.requestPermission();
-    		});
     	</script>
         
     </body>
